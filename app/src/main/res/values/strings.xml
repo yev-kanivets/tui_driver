@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Feast for driver</string>
+    <string name="intro_to_app">Ready to deliver the best food in the world?</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
 </resources>
