@@ -33,43 +33,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_margin="8dp"
-                  android:layout_gravity="center|top"
-                  app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                  android:orientation="vertical">
-
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_gravity="center"
-                  android:layout_marginTop="30dp"
-                  android:textSize="18sp"
-                  android:text="@string/intro_to_app"
-                  android:fontFamily="sans-serif"/>
-
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
-            <Button
-                    android:id="@+id/btnSignIn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/sign_in"/>
-            <Button
-                    android:id="@+id/btnSignUp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:shadowColor="@color/colorPrimaryDark"
-                    android:layout_weight="1"
-                    android:text="@string/sign_up"/>
-        </LinearLayout>
-
-    </LinearLayout>
-
+    <include layout="@layout/content_main"/>
 
 </android.support.design.widget.CoordinatorLayout>
