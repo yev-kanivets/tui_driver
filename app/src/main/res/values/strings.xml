@@ -3,4 +3,12 @@
     <string name="intro_to_app">Ready to deliver the best food in the world?</string>
     <string name="sign_in">Sign in</string>
     <string name="sign_up">Sign up</string>
+    <string name="title_activity_sign_in">Sign in</string>
+    <string name="title_activity_sign_up">Sign up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login_to_your_account">Login to your account</string>
+    <string name="loading">Loading…</string>
+    <string name="signed_in">Signed In</string>
+    <string name="intro">Intro</string>
 </resources>

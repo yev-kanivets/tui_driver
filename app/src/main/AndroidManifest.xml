@@ -24,10 +24,16 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".SignInActivity">
-        </activity>
-        <activity android:name=".SignUpActivity">
-        </activity>
+        <activity
+                android:name=".login.SignInActivity"
+                android:label="@string/title_activity_sign_in"
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+                android:name=".login.SignUpActivity"
+                android:label="@string/title_activity_sign_up"
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

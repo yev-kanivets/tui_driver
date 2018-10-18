@@ -1,11 +1,14 @@
 package com.example.bogdan.feastfordriver
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.example.bogdan.feastfordriver.base.BaseActivity
+import com.example.bogdan.feastfordriver.login.SignInActivity
+import com.example.bogdan.feastfordriver.login.SignUpActivity
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
