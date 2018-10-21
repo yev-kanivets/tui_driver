@@ -32,4 +32,13 @@
     <string name="online">Online</string>
     <string name="logout">Log out</string>
     <string name="user_signed_up_successfully">User signed up successfully</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="start_deliver_orders">Start deliver orders?</string>
+    <string name="finish_deliver_orders">Finish deliver orders?</string>
+    <string name="message_online">You can receive orders and accept or reject them</string>
+    <string name="message_offline">You can\'t receive orders</string>
+    <string name="wait">Wait for the administrator to see your data...</string>
 </resources>

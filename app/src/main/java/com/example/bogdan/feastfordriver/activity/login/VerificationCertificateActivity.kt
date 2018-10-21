@@ -43,7 +43,7 @@ class VerificationCertificateActivity : BaseActivity() {
                 if (task.isSuccessful) {
                     Const.DRIVERS_REF.document(FirebaseAuth.getInstance().currentUser!!.uid)
                         .update(
-                            "capacityOfCar", etCapacity.text.toString(),
+                            "capacityOfCar", etCapacity.text.toString().toLong(),
                             "certificateUrl", task.result.downloadUrl.toString()
                         ).addOnSuccessListener { _ ->
                             hideProgress()

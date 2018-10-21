@@ -4,12 +4,12 @@ data class Driver(
     val id: String = "",
     val email: String = "",
     val fullName: String = "",
-    val online: Int = 0,
+    val online: Boolean = false,
     val phoneNumber: String = "",
     val capacityOfCar: Long = 0,
     val gps: String = "",
     val certificateUrl: String = "",
     val restaurantId: String = "",
     val dateOfAdd: Long = 0,
-    val check: Long = 0
+    val check: Boolean = false
 )
