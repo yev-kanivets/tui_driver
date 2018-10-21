@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:orientation="horizontal"
+              android:layout_marginEnd="8dp"
+              android:background="@color/white"
+              android:layout_marginStart="8dp"
+              android:layout_height="wrap_content">
+
+    <Button android:layout_width="16dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_height="56dp"
+            android:background="@drawable/border"
+            android:foreground="@drawable/ic_check"/>
+
+    <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_weight="1"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    tools:text="Miru street, 86 06.08.2018, 17 : 30 "/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    tools:text="Miru street, 102a, 06.08.2018. 17 : 45"/>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <Button android:layout_width="16dp"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_height="56dp"
+            android:background="@drawable/border"
+            android:foreground="@drawable/ic_close"/>
+
+</LinearLayout>
+

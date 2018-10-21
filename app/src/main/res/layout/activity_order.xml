@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activity.OrderActivity">
+        tools:context=".activity.delivery.DeliveryActivity">
 
     <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
@@ -40,9 +40,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:visibility="invisible"
             android:text="@string/wait"
             android:textSize="18sp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <include layout="@layout/content_order"/>
 
     <android.support.v4.widget.DrawerLayout
             android:id="@+id/drawerLayout"

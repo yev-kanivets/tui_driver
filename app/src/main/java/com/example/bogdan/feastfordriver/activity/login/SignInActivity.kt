@@ -1,11 +1,10 @@
 package com.example.bogdan.feastfordriver.activity.login
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.example.bogdan.feastfordriver.R
-import com.example.bogdan.feastfordriver.activity.OrderActivity
+import com.example.bogdan.feastfordriver.activity.delivery.DeliveryActivity
 import com.example.bogdan.feastfordriver.activity.base.BaseBackActivity
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_sign_in.*
@@ -38,7 +37,7 @@ class SignInActivity : BaseBackActivity() {
                     hideProgress()
                     if (task.isSuccessful) {
                         showToast(getString(R.string.signed_in))
-                        startActivity(OrderActivity.newIntent(this))
+                        startActivity(DeliveryActivity.newIntent(this))
                         finish()
                     } else {
                         showToast(task.exception.toString())

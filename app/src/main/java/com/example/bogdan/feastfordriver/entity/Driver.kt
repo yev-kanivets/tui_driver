@@ -11,5 +11,6 @@ data class Driver(
     val certificateUrl: String = "",
     val restaurantId: String = "",
     val dateOfAdd: Long = 0,
-    val check: Boolean = false
+    val check: Boolean = false,
+    val removed: Boolean = false
 )

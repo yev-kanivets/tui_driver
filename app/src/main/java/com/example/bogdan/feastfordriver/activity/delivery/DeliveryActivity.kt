@@ -1,4 +1,4 @@
-package com.example.bogdan.feastfordriver.activity
+package com.example.bogdan.feastfordriver.activity.delivery
 
 import android.app.AlertDialog
 import android.content.Context
@@ -8,20 +8,24 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
-import android.util.Log
+import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
 import android.view.View
 import com.example.bogdan.feastfordriver.R
 import com.example.bogdan.feastfordriver.activity.base.BaseActivity
+import com.example.bogdan.feastfordriver.activity.delivery.adapter.DeliveryAdapter
+import com.example.bogdan.feastfordriver.entity.Delivery
 import com.example.bogdan.feastfordriver.entity.Driver
 import com.example.bogdan.feastfordriver.util.Const
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_order.*
+import kotlinx.android.synthetic.main.content_order.*
 
-class OrderActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
+class DeliveryActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var mDrawerLayout: DrawerLayout
     private lateinit var mToggle: ActionBarDrawerToggle
+    private lateinit var adapter: DeliveryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,13 +82,18 @@ class OrderActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
                     if (driver.check) {
                         swOnline.visibility = View.VISIBLE
                         tvWait.visibility = View.INVISIBLE
+                        recyclerView.visibility = View.VISIBLE
                     } else {
                         swOnline.visibility = View.INVISIBLE
                         tvWait.visibility = View.VISIBLE
+                        recyclerView.visibility = View.INVISIBLE
                     }
                 }
             }
         }
+        adapter = DeliveryAdapter(listOf()) { delivery -> showDelivery(delivery) }
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
         mDrawerLayout = findViewById(R.id.drawerLayout)
         mToggle = ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close)
         mDrawerLayout.addDrawerListener(mToggle)
@@ -92,7 +101,6 @@ class OrderActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         navigationView.setNavigationItemSelectedListener(this)
         swOnline.setOnClickListener {
-            Log.d("MeTag3", swOnline.isChecked.toString())
             swOnline.isChecked = !swOnline.isChecked
             if (!swOnline.isChecked) {
                 showSwitchDialog(
@@ -108,9 +116,15 @@ class OrderActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedLis
         }
     }
 
+    private fun showDelivery(delivery: Delivery) {
+        startActivityForResult(ShowDeliveryActivity.newIntent(this, delivery), REQUEST_SHOW_DELIVERY)
+    }
+
     companion object {
+        const val REQUEST_SHOW_DELIVERY = 1
+
         fun newIntent(context: Context): Intent {
-            return Intent(context, OrderActivity::class.java)
+            return Intent(context, DeliveryActivity::class.java)
         }
     }
 }
