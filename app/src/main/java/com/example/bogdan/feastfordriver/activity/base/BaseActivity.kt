@@ -1,4 +1,4 @@
-package com.example.bogdan.feastfordriver.base
+package com.example.bogdan.feastfordriver.activity.base
 
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
@@ -26,5 +26,4 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     //protected fun isUserLoggedIn(): Boolean = FirebaseAuth.getInstance().currentUser != null
-
 }

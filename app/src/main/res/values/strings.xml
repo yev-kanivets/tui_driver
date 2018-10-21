@@ -8,7 +8,28 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login_to_your_account">Login to your account</string>
+    <string name="create_your_account">Create your account</string>
     <string name="loading">Loading…</string>
     <string name="signed_in">Signed In</string>
     <string name="intro">Intro</string>
+    <string name="full_name">Full Name</string>
+    <string name="phone_number">Phone number</string>
+    <string name="terms_of_use">I agree that Feast for driver and its representatives\ncan contact me via e-mail, phone
+        or SMS (in\nparticular, using automated means) using the e-mail address or phone number I provided, including\n
+        for marketing purposes.\n
+    </string>
+    <string name="signed_up">Signed up</string>
+    <string name="continue_sign_up">Continue</string>
+    <string name="get_the_code">Get the code</string>
+    <string name="enter_confirmation_code">Enter confirmation code</string>
+    <string name="verify">Verify</string>
+    <string name="resend_code">Resend code</string>
+    <string name="verification_code_entered_was_invalid">Verification code entered was invalid</string>
+    <string name="field_can_not_be_empty">Field can\'t be empty</string>
+    <string name="select_a_picture_of_the_certificate">Select a picture of the certificate</string>
+    <string name="capacity_of_car">Capacity of car(kg)</string>
+    <string name="first_get_the_code">First get the code</string>
+    <string name="online">Online</string>
+    <string name="logout">Log out</string>
+    <string name="user_signed_up_successfully">User signed up successfully</string>
 </resources>

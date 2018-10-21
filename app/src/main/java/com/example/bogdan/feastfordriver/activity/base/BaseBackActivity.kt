@@ -1,4 +1,4 @@
-package com.example.bogdan.feastfordriver.base
+package com.example.bogdan.feastfordriver.activity.base
 
 import android.view.MenuItem
 import com.example.bogdan.feastfordriver.R

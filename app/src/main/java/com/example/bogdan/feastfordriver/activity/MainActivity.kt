@@ -1,9 +1,10 @@
-package com.example.bogdan.feastfordriver
+package com.example.bogdan.feastfordriver.activity
 
 import android.os.Bundle
-import com.example.bogdan.feastfordriver.base.BaseActivity
-import com.example.bogdan.feastfordriver.login.SignInActivity
-import com.example.bogdan.feastfordriver.login.SignUpActivity
+import com.example.bogdan.feastfordriver.R
+import com.example.bogdan.feastfordriver.activity.base.BaseActivity
+import com.example.bogdan.feastfordriver.activity.login.SignInActivity
+import com.example.bogdan.feastfordriver.activity.login.SignUpActivity
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -23,16 +24,11 @@ class MainActivity : BaseActivity() {
             .into(ivMain)
 
         btnSignIn.setOnClickListener {
-            startActivityForResult(SignInActivity.newIntent(this), REQUEST_SIGN_IN)
+            startActivity(SignInActivity.newIntent(this))
         }
         btnSignUp.setOnClickListener {
-            startActivityForResult(SignUpActivity.newIntent(this), REQUEST_SIGN_UP)
+            startActivity(SignUpActivity.newIntent(this))
         }
-    }
-
-    companion object {
-        const val REQUEST_SIGN_IN = 1
-        const val REQUEST_SIGN_UP = 2
     }
 
 }

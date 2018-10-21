@@ -6,31 +6,45 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".activity.login.SignInActivity"
-        tools:showIn="@layout/activity_sign_in">
+        tools:context=".activity.login.SignUpActivity"
+        tools:showIn="@layout/activity_sign_up">
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
             android:orientation="vertical">
 
         <TextView
                 android:layout_marginTop="32dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textSize="24sp"
                 android:fontFamily="sans-serif"
-                android:text="@string/login_to_your_account"/>
+                android:text="@string/create_your_account"/>
+
+        <android.support.design.widget.TextInputLayout
+                android:id="@+id/tilFullName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp">
+
+            <EditText
+                    android:id="@+id/etFullName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="@string/full_name"
+                    android:inputType="text"/>
+        </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
                 android:id="@+id/tilEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp">
 
             <EditText
@@ -47,9 +61,7 @@
                 android:id="@+id/tilPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="48dp">
+                android:layout_marginTop="32dp">
 
             <EditText
                     android:id="@+id/etPassword"
@@ -61,6 +73,23 @@
                     android:inputType="textPassword"/>
         </android.support.design.widget.TextInputLayout>
 
+        <TextView
+                android:layout_marginTop="32dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="14sp"
+                android:fontFamily="sans-serif"
+                android:text="@string/terms_of_use"/>
+
+        <Button
+                android:id="@+id/btnContinue"
+                android:layout_width="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/continue_sign_up"/>
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>
