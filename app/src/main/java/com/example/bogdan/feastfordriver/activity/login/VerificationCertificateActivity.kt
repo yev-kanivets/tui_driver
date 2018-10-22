@@ -8,7 +8,7 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
 import com.example.bogdan.feastfordriver.R
-import com.example.bogdan.feastfordriver.activity.OrderActivity
+import com.example.bogdan.feastfordriver.activity.delivery.DeliveryActivity
 import com.example.bogdan.feastfordriver.activity.base.BaseActivity
 import com.example.bogdan.feastfordriver.util.Const
 import com.google.firebase.auth.FirebaseAuth
@@ -43,12 +43,12 @@ class VerificationCertificateActivity : BaseActivity() {
                 if (task.isSuccessful) {
                     Const.DRIVERS_REF.document(FirebaseAuth.getInstance().currentUser!!.uid)
                         .update(
-                            "capacityOfCar", etCapacity.text.toString(),
+                            "capacityOfCar", etCapacity.text.toString().toLong(),
                             "certificateUrl", task.result.downloadUrl.toString()
                         ).addOnSuccessListener { _ ->
                             hideProgress()
                             showToast(getString(R.string.user_signed_up_successfully))
-                            startActivity(OrderActivity.newIntent(this))
+                            startActivity(DeliveryActivity.newIntent(this))
                             finish()
                         }
                 } else {
