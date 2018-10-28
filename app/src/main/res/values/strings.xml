@@ -40,5 +40,7 @@
     <string name="finish_deliver_orders">Finish deliver orders?</string>
     <string name="message_online">You can receive orders and accept or reject them</string>
     <string name="message_offline">You can\'t receive orders</string>
-    <string name="wait">Wait for the administrator to see your data...</string>
+    <string name="wait">Wait for the administrator to see your data…</string>
+    <string name="location_is_monitored">Location is monitored</string>
+    <string name="channel_id">Location channel</string>
 </resources>

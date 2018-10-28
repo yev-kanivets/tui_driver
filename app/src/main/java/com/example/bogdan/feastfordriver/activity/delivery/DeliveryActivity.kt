@@ -1,10 +1,14 @@
 package com.example.bogdan.feastfordriver.activity.delivery
 
+import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
@@ -16,6 +20,7 @@ import com.example.bogdan.feastfordriver.activity.base.BaseActivity
 import com.example.bogdan.feastfordriver.activity.delivery.adapter.DeliveryAdapter
 import com.example.bogdan.feastfordriver.entity.Delivery
 import com.example.bogdan.feastfordriver.entity.Driver
+import com.example.bogdan.feastfordriver.gps.DistanceTrackerService
 import com.example.bogdan.feastfordriver.util.Const
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_order.*
@@ -37,6 +42,7 @@ class DeliveryActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_log_out -> {
+                stopTracking()
                 FirebaseAuth.getInstance().signOut()
                 finish()
                 return true
@@ -52,6 +58,11 @@ class DeliveryActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
         alertDialog.setPositiveButton(R.string.yes) { _, _ ->
             Const.DRIVERS_REF.document(FirebaseAuth.getInstance().currentUser!!.uid)
                 .update("online", !swOnline.isChecked).addOnSuccessListener {
+                    if (swOnline.isChecked) {
+                        stopTracking()
+                    } else {
+                        checkPermissions()
+                    }
                     swOnline.isChecked = !swOnline.isChecked
                 }
         }
@@ -120,8 +131,36 @@ class DeliveryActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
         startActivityForResult(ShowDeliveryActivity.newIntent(this, delivery), REQUEST_SHOW_DELIVERY)
     }
 
+    private fun checkPermissions() {
+        if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+        ) {
+            startTracking()
+        } else {
+            ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                REQUEST_LOCATION_PERMISSIONS
+            )
+        }
+    }
+
+    private fun startTracking() {
+        val intent = Intent(this, DistanceTrackerService::class.java)
+        intent.action = DistanceTrackerService.ACTION_START_TRACKING
+        startService(intent)
+    }
+
+    private fun stopTracking() {
+        val intent = Intent(this, DistanceTrackerService::class.java)
+        intent.action = DistanceTrackerService.ACTION_STOP_TRACKING
+        startService(intent)
+    }
+
     companion object {
         const val REQUEST_SHOW_DELIVERY = 1
+        const val REQUEST_LOCATION_PERMISSIONS = 2
 
         fun newIntent(context: Context): Intent {
             return Intent(context, DeliveryActivity::class.java)
