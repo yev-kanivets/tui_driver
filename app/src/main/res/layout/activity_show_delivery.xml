@@ -21,4 +21,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <include layout="@layout/content_show_delivery"/>
+
 </android.support.design.widget.CoordinatorLayout>

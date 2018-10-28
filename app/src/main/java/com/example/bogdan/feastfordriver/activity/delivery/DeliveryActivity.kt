@@ -16,6 +16,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
 import android.view.View
 import com.example.bogdan.feastfordriver.R
+import com.example.bogdan.feastfordriver.activity.MainActivity
 import com.example.bogdan.feastfordriver.activity.base.BaseActivity
 import com.example.bogdan.feastfordriver.activity.delivery.adapter.DeliveryAdapter
 import com.example.bogdan.feastfordriver.entity.Delivery
@@ -25,7 +26,6 @@ import com.example.bogdan.feastfordriver.util.Const
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_order.*
 import kotlinx.android.synthetic.main.content_order.*
-import java.util.*
 
 class DeliveryActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -37,15 +37,25 @@ class DeliveryActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order)
         setSupportActionBar(toolbar)
+        if (FirebaseAuth.getInstance().currentUser == null) {
+            startActivity(MainActivity.newIntent(this))
+            finish()
+        }
+
         initViews()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_log_out -> {
-                stopTracking()
-                FirebaseAuth.getInstance().signOut()
-                finish()
+                showProgress()
+                Const.DRIVERS_REF.document(FirebaseAuth.getInstance().currentUser!!.uid)
+                    .update("online", false).addOnSuccessListener {
+                        hideProgress()
+                        stopTracking()
+                        FirebaseAuth.getInstance().signOut()
+                        finish()
+                    }
                 return true
             }
         }
@@ -92,14 +102,17 @@ class DeliveryActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
         showProgress()
         val driverId = FirebaseAuth.getInstance().currentUser?.uid
         Const.DELIVERIES_REF
-            .whereGreaterThan("timePreparation", Calendar.getInstance().timeInMillis)
-            //.whereEqualTo("driverId", driverId)
+            .whereEqualTo("driverId", driverId)
             .addSnapshotListener { value, _ ->
                 hideProgress()
-                if (value != null) {
-                    val deliveries = value.documents.map { doc -> doc.toObject(Delivery::class.java) }
-                    adapter.setItems(deliveries)
+                val deliveries = mutableListOf<Delivery>()
+                value?.documents?.forEach { doc ->
+                    val delivery = doc.toObject(Delivery::class.java)
+                    if (delivery.realDeliveryTime < 2) {
+                        deliveries.add(delivery)
+                    }
                 }
+                adapter.setItems(deliveries)
             }
     }
 
@@ -161,6 +174,7 @@ class DeliveryActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
                 this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 REQUEST_LOCATION_PERMISSIONS
             )
+            startTracking()
         }
     }
 

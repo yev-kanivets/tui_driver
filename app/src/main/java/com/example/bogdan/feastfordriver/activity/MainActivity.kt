@@ -1,5 +1,7 @@
 package com.example.bogdan.feastfordriver.activity
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import com.example.bogdan.feastfordriver.R
 import com.example.bogdan.feastfordriver.activity.base.BaseActivity
@@ -32,6 +34,12 @@ class MainActivity : BaseActivity() {
         }
         btnSignUp.setOnClickListener {
             startActivity(SignUpActivity.newIntent(this))
+        }
+    }
+
+    companion object {
+        fun newIntent(context: Context): Intent {
+            return Intent(context, MainActivity::class.java)
         }
     }
 

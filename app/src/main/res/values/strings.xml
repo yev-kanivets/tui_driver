@@ -43,4 +43,6 @@
     <string name="wait">Wait for the administrator to see your data…</string>
     <string name="location_is_monitored">Location is monitored</string>
     <string name="channel_id">Location channel</string>
+    <string name="order">Order</string>
+    <string name="finish_delivery">Finish delivery</string>
 </resources>

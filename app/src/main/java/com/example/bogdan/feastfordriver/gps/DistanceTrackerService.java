@@ -29,7 +29,7 @@ public class DistanceTrackerService extends Service {
     public static final String ACTION_STOP_TRACKING = BuildConfig.APPLICATION_ID + ".action_stop_tracking";
     public static final String ACTION_BROADCAST_CURRENT_STATE = BuildConfig.APPLICATION_ID + ".action_broadcast_current_state";
 
-    private static final int UPDATE_PERIOD = 10000; // 10 seconds
+    private static final int UPDATE_PERIOD = 100000; // 10 seconds
     private static final int NOTIFICATION_ID = 18515;
 
     private DistanceTrackerManager manager;

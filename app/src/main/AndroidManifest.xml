@@ -51,7 +51,11 @@
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.NoActionBar"
                 android:launchMode="singleTask"/>
-        <activity android:name=".activity.delivery.ShowDeliveryActivity"/>
+        <activity
+                android:name=".activity.delivery.ShowDeliveryActivity"
+                android:screenOrientation="portrait"
+                android:label="@string/order"
+                android:theme="@style/AppTheme.NoActionBar"/>
         <service
                 android:name=".gps.DistanceTrackerService"
                 android:exported="false">

@@ -19,5 +19,6 @@ data class Delivery(
     var driverId: String = "",
     val realDeliveryTime: Long = 0,
     val orderId: String = "",
-    val restaurantId: String = ""
+    val restaurantId: String = "",
+    val usedDrivers: MutableList<String> = mutableListOf()
 ) : Parcelable

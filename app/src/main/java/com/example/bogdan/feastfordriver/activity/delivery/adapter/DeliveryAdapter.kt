@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.example.bogdan.feastfordriver.R
 import com.example.bogdan.feastfordriver.entity.Delivery
 import com.example.bogdan.feastfordriver.util.Const
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.view_item_order.view.*
 
 class DeliveryAdapter(private var deliveryList: List<Delivery>, private val onClick: (delivery: Delivery) -> Unit) :
@@ -39,7 +40,11 @@ class DeliveryAdapter(private var deliveryList: List<Delivery>, private val onCl
                 Const.DELIVERIES_REF.document(item.id).update("realDeliveryTime", 1)
             }
             btnReject.setOnClickListener {
+                item.usedDrivers.add(item.driverId)
                 Const.DELIVERIES_REF.document(item.id)
+                    .update("usedDrivers", item.usedDrivers).addOnSuccessListener {
+                        Const.DELIVERIES_REF.document(item.id).update("realDeliveryTime", 2)
+                    }
             }
             if (item.realDeliveryTime == 1L) {
                 btnAccept.visibility = View.GONE
