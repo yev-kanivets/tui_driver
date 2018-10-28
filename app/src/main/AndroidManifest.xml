@@ -4,9 +4,11 @@
           package="com.example.bogdan.feastfordriver">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
             android:allowBackup="true"
+            android:name=".FdApp"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
@@ -48,8 +50,18 @@
                 android:name=".activity.delivery.DeliveryActivity"
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".activity.delivery.ShowDeliveryActivity">
-        </activity>
+        <activity android:name=".activity.delivery.ShowDeliveryActivity"/>
+        <service
+                android:name=".gps.DistanceTrackerService"
+                android:exported="false">
+            <intent-filter>
+                <action android:name="${applicationId}.action_start_tracking"/>
+                <action android:name="${applicationId}.action_stop_tracking"/>
+                <action android:name="${applicationId}.action_broadcast_current_state"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
