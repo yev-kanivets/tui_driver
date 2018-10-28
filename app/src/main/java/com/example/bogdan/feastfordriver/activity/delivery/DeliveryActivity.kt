@@ -25,6 +25,7 @@ import com.example.bogdan.feastfordriver.util.Const
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_order.*
 import kotlinx.android.synthetic.main.content_order.*
+import java.util.*
 
 class DeliveryActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -51,26 +52,6 @@ class DeliveryActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
         return false
     }
 
-    private fun showSwitchDialog(title: String, message: String) {
-        val alertDialog = AlertDialog.Builder(this)
-        alertDialog.setTitle(title)
-        alertDialog.setMessage(message)
-        alertDialog.setPositiveButton(R.string.yes) { _, _ ->
-            Const.DRIVERS_REF.document(FirebaseAuth.getInstance().currentUser!!.uid)
-                .update("online", !swOnline.isChecked).addOnSuccessListener {
-                    if (swOnline.isChecked) {
-                        stopTracking()
-                    } else {
-                        checkPermissions()
-                    }
-                    swOnline.isChecked = !swOnline.isChecked
-                }
-        }
-        alertDialog.setNegativeButton(R.string.no) { _, _ -> }
-        alertDialog.create()
-        alertDialog.show()
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
@@ -83,6 +64,43 @@ class DeliveryActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun showSwitchDialog(title: String, message: String) {
+        val alertDialog = AlertDialog.Builder(this)
+        alertDialog.setTitle(title)
+        alertDialog.setMessage(message)
+        alertDialog.setPositiveButton(R.string.yes) { _, _ ->
+            Const.DRIVERS_REF.document(FirebaseAuth.getInstance().currentUser!!.uid)
+                .update("online", !swOnline.isChecked).addOnSuccessListener {
+                    if (swOnline.isChecked) {
+                        stopTracking()
+                        adapter.setItems(listOf())
+                    } else {
+                        updateRecycler()
+                        checkPermissions()
+                    }
+                    swOnline.isChecked = !swOnline.isChecked
+                }
+        }
+        alertDialog.setNegativeButton(R.string.no) { _, _ -> }
+        alertDialog.create()
+        alertDialog.show()
+    }
+
+    private fun updateRecycler() {
+        showProgress()
+        val driverId = FirebaseAuth.getInstance().currentUser?.uid
+        Const.DELIVERIES_REF
+            .whereGreaterThan("timePreparation", Calendar.getInstance().timeInMillis)
+            //.whereEqualTo("driverId", driverId)
+            .addSnapshotListener { value, _ ->
+                hideProgress()
+                if (value != null) {
+                    val deliveries = value.documents.map { doc -> doc.toObject(Delivery::class.java) }
+                    adapter.setItems(deliveries)
+                }
+            }
     }
 
     private fun initViews() {

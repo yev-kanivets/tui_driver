@@ -15,7 +15,8 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Delivery(
     val id: String = "",
-    val driverId: String = "",
+    val timePreparation: Long = 0,
+    var driverId: String = "",
     val realDeliveryTime: Long = 0,
     val orderId: String = "",
     val restaurantId: String = ""

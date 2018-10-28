@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.bogdan.feastfordriver.R
 import com.example.bogdan.feastfordriver.entity.Delivery
+import com.example.bogdan.feastfordriver.util.Const
+import kotlinx.android.synthetic.main.view_item_order.view.*
 
 class DeliveryAdapter(private var deliveryList: List<Delivery>, private val onClick: (delivery: Delivery) -> Unit) :
     RecyclerView.Adapter<DeliveryAdapter.ViewHolder>() {
@@ -32,7 +34,20 @@ class DeliveryAdapter(private var deliveryList: List<Delivery>, private val onCl
 
     class ViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: Delivery, listener: (Delivery) -> Unit) = with(itemView) {
-            setOnClickListener { listener(item) }
+            llDelivery.setOnClickListener { listener(item) }
+            btnAccept.setOnClickListener {
+                Const.DELIVERIES_REF.document(item.id).update("realDeliveryTime", 1)
+            }
+            btnReject.setOnClickListener {
+                Const.DELIVERIES_REF.document(item.id)
+            }
+            if (item.realDeliveryTime == 1L) {
+                btnAccept.visibility = View.GONE
+                btnReject.visibility = View.GONE
+            } else {
+                btnAccept.visibility = View.VISIBLE
+                btnReject.visibility = View.VISIBLE
+            }
         }
     }
 
