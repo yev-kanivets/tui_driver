@@ -25,7 +25,7 @@ class SignInActivity : BaseBackActivity() {
     }
 
     private fun loginWithEmailAndPassword() {
-        /*val email = etEmail.text.toString()
+        val email = etEmail.text.toString()
         val password = etPassword.text.toString()
 
         if (email.trim().isEmpty() || email.trim().isEmpty()) {
@@ -37,13 +37,13 @@ class SignInActivity : BaseBackActivity() {
                     hideProgress()
                     if (task.isSuccessful) {
                         showToast(getString(R.string.signed_in))
-          */              startActivity(DeliveryActivity.newIntent(this))
+                        startActivity(DeliveryActivity.newIntent(this))
                         finish()
-            /*        } else {
+                    } else {
                         showToast(task.exception.toString())
                     }
                 }
-        }*/
+        }
     }
 
     companion object {

@@ -1,10 +1,14 @@
 package com.example.bogdan.feastfordriver.gps;
 
-import android.app.Service;
+import android.app.*;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import com.example.bogdan.feastfordriver.BuildConfig;
+import com.example.bogdan.feastfordriver.R;
+import com.example.bogdan.feastfordriver.activity.delivery.DeliveryActivity;
 import com.example.bogdan.feastfordriver.util.Const;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,9 +29,8 @@ public class DistanceTrackerService extends Service {
     public static final String ACTION_STOP_TRACKING = BuildConfig.APPLICATION_ID + ".action_stop_tracking";
     public static final String ACTION_BROADCAST_CURRENT_STATE = BuildConfig.APPLICATION_ID + ".action_broadcast_current_state";
 
-    public static final String EXTRA_DISTANCE_TRACKER_STATE = BuildConfig.APPLICATION_ID + ".extra_distance_tracker_state";
-
     private static final int UPDATE_PERIOD = 10000; // 10 seconds
+    private static final int NOTIFICATION_ID = 18515;
 
     private DistanceTrackerManager manager;
     private Timer timer;
@@ -74,12 +77,14 @@ public class DistanceTrackerService extends Service {
     private void startTracking() {
         manager.startTracking();
         startTimer();
+        showNotification();
         sendCurrentState();
     }
 
     private void stopTracking() {
         manager.stopTracking();
         stopTimer();
+        hideNotification();
         sendCurrentState();
     }
 
@@ -94,6 +99,10 @@ public class DistanceTrackerService extends Service {
         if (firebaseUser != null) {
             Const.INSTANCE.getDRIVERS_REF().document(firebaseUser.getUid()).update("gps", lat + ", " + lon);
         }
+    }
+
+    public void hideNotification() {
+        stopForeground(true);
     }
 
     private void startTimer() {
@@ -112,6 +121,41 @@ public class DistanceTrackerService extends Service {
             timer.cancel();
             timer = null;
         }
+    }
+
+    public void showNotification() {
+        Notification.Builder notificationBuilder = new Notification.Builder(this);
+        notificationBuilder.setContentTitle(getString(R.string.online));
+        notificationBuilder.setContentText(getString(R.string.location_is_monitored));
+        notificationBuilder.setSmallIcon(R.drawable.ic_check);
+        notificationBuilder.setOngoing(true);
+        notificationBuilder.setOnlyAlertOnce(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String CHANNEL_ID = "FdChannel";
+            notificationBuilder.setChannelId(CHANNEL_ID);
+            NotificationManager notificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,
+                    getString(R.string.channel_id),
+                    NotificationManager.IMPORTANCE_HIGH);
+
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            notificationBuilder.setVisibility(Notification.VISIBILITY_PUBLIC);
+        }
+
+        Intent intentOpenPlayer = new Intent(this, DeliveryActivity.class);
+        PendingIntent pendingIntentOpenPlayer = PendingIntent.getActivity(this, 0,
+                intentOpenPlayer, 0);
+        notificationBuilder.setContentIntent(pendingIntentOpenPlayer);
+
+        Notification notification = notificationBuilder.getNotification();
+
+        startForeground(NOTIFICATION_ID, notification);
     }
 
 }

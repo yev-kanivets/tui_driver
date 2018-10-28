@@ -42,6 +42,7 @@ class DeliveryActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_log_out -> {
+                stopTracking()
                 FirebaseAuth.getInstance().signOut()
                 finish()
                 return true
