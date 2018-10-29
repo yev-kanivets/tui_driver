@@ -1,6 +1,7 @@
 package com.example.bogdan.feastfordriver.activity.delivery
 
 import android.Manifest
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -23,6 +24,7 @@ import com.example.bogdan.feastfordriver.entity.Delivery
 import com.example.bogdan.feastfordriver.entity.Driver
 import com.example.bogdan.feastfordriver.gps.DistanceTrackerService
 import com.example.bogdan.feastfordriver.util.Const
+import com.google.android.gms.location.places.ui.PlacePicker
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_order.*
 import kotlinx.android.synthetic.main.content_order.*
@@ -58,6 +60,9 @@ class DeliveryActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
                     }
                 return true
             }
+            R.id.action_send_location -> {
+                pickAddress()
+            }
         }
         return false
     }
@@ -76,6 +81,20 @@ class DeliveryActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                REQUEST_PLACE_PICKER -> {
+                    val place = PlacePicker.getPlace(this, data)
+                    Const.DRIVERS_REF.document(FirebaseAuth.getInstance().currentUser!!.uid)
+                        .update("gps", place.latLng.latitude.toString() + ", " + place.latLng.longitude.toString())
+                }
+            }
+        }
+    }
+
     private fun showSwitchDialog(title: String, message: String) {
         val alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle(title)
@@ -84,9 +103,11 @@ class DeliveryActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
             Const.DRIVERS_REF.document(FirebaseAuth.getInstance().currentUser!!.uid)
                 .update("online", !swOnline.isChecked).addOnSuccessListener {
                     if (swOnline.isChecked) {
+                        navigationView.menu.findItem(R.id.action_send_location).isVisible = false
                         stopTracking()
                         adapter.setItems(listOf())
                     } else {
+                        navigationView.menu.findItem(R.id.action_send_location).isVisible = true
                         updateRecycler()
                         checkPermissions()
                     }
@@ -117,18 +138,28 @@ class DeliveryActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
     }
 
     private fun initViews() {
-        Const.DRIVERS_REF.document(FirebaseAuth.getInstance().currentUser!!.uid).addSnapshotListener { value, _ ->
-            value?.let { doc ->
-                if (doc.exists()) {
-                    val driver = doc.toObject(Driver::class.java)
-                    if (driver.check) {
-                        swOnline.visibility = View.VISIBLE
-                        tvWait.visibility = View.INVISIBLE
-                        recyclerView.visibility = View.VISIBLE
-                    } else {
-                        swOnline.visibility = View.INVISIBLE
-                        tvWait.visibility = View.VISIBLE
-                        recyclerView.visibility = View.INVISIBLE
+        FirebaseAuth.getInstance().currentUser?.let { driver ->
+            Const.DRIVERS_REF.document(driver.uid).get().addOnSuccessListener { task ->
+                val firestoreDriver = task.toObject(Driver::class.java)
+                swOnline.isChecked = firestoreDriver.online
+                navigationView.menu.findItem(R.id.action_send_location).isVisible = swOnline.isChecked
+                if (swOnline.isChecked) {
+                    updateRecycler()
+                }
+            }
+            Const.DRIVERS_REF.document(driver.uid).addSnapshotListener { value, _ ->
+                value?.let { doc ->
+                    if (doc.exists()) {
+                        val curDriver = doc.toObject(Driver::class.java)
+                        if (curDriver.check) {
+                            swOnline.visibility = View.VISIBLE
+                            tvWait.visibility = View.INVISIBLE
+                            recyclerView.visibility = View.VISIBLE
+                        } else {
+                            swOnline.visibility = View.INVISIBLE
+                            tvWait.visibility = View.VISIBLE
+                            recyclerView.visibility = View.INVISIBLE
+                        }
                     }
                 }
             }
@@ -163,19 +194,31 @@ class DeliveryActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
     }
 
     private fun checkPermissions() {
-        if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-        ) {
-            startTracking()
-        } else {
-            ActivityCompat.requestPermissions(
-                this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                REQUEST_LOCATION_PERMISSIONS
-            )
-            startTracking()
+        val alertDialog = AlertDialog.Builder(this)
+        alertDialog.setTitle(getString(R.string.use_coordinate_tracking))
+        alertDialog.setMessage(getString(R.string.confirm_tracking))
+        alertDialog.setPositiveButton(R.string.yes) { _, _ ->
+            if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+            ) {
+                startTracking()
+            } else {
+                ActivityCompat.requestPermissions(
+                    this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    REQUEST_LOCATION_PERMISSIONS
+                )
+            }
         }
+        alertDialog.setNegativeButton(R.string.no) { _, _ -> }
+        alertDialog.create()
+        alertDialog.show()
+    }
+
+    private fun pickAddress() {
+        val builder = PlacePicker.IntentBuilder()
+        startActivityForResult(builder.build(this), REQUEST_PLACE_PICKER)
     }
 
     private fun startTracking() {
@@ -193,6 +236,7 @@ class DeliveryActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
     companion object {
         const val REQUEST_SHOW_DELIVERY = 1
         const val REQUEST_LOCATION_PERMISSIONS = 2
+        const val REQUEST_PLACE_PICKER = 3
 
         fun newIntent(context: Context): Intent {
             return Intent(context, DeliveryActivity::class.java)

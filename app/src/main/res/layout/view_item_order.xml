@@ -11,23 +11,25 @@
     <Button android:id="@+id/btnAccept"
             android:layout_width="36dp"
             android:layout_gravity="center_vertical"
-            android:layout_height="56dp"
+            android:layout_height="60dp"
             android:background="@drawable/border"
             android:foreground="@drawable/ic_check"/>
 
     <LinearLayout
             android:id="@+id/llDelivery"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="8dp">
         <TextView
+                android:id="@+id/tvOrder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 tools:text="Miru street, 86 06.08.2018, 17 : 30 "/>
         <TextView
+                android:id="@+id/tvRestaurant"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
@@ -38,7 +40,7 @@
     <Button android:id="@+id/btnReject"
             android:layout_width="36dp"
             android:layout_gravity="center_vertical"
-            android:layout_height="56dp"
+            android:layout_height="60dp"
             android:background="@drawable/border"
             android:foreground="@drawable/ic_close"/>
 

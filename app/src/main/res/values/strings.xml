@@ -45,4 +45,13 @@
     <string name="channel_id">Location channel</string>
     <string name="order">Order</string>
     <string name="finish_delivery">Finish delivery</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="confirm">You confirm that you brought food to the client.</string>
+    <string name="use_coordinate_tracking">Use location tracking?</string>
+    <string name="confirm_tracking">If you confirm location tracking, your coordinates will be automatically
+        transmitted
+    </string>
+    <string name="send_location">Send location</string>
+    <string name="restaurant_phone_number">Restaurant: %1$s</string>
+    <string name="client">Client: %1$s</string>
 </resources>
