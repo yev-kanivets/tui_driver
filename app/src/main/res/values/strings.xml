@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Feast for driver</string>
+    <string name="app_name">Bögdan</string>
     <string name="intro_to_app">Ready to deliver the best food in the world?</string>
     <string name="sign_in">Sign in</string>
     <string name="sign_up">Sign up</string>
@@ -42,7 +42,7 @@
     <string name="message_offline">You can\'t receive orders</string>
     <string name="wait">Wait for the administrator to see your data…</string>
     <string name="location_is_monitored">Location is monitored</string>
-    <string name="channel_id">Location channel</string>
+    <string name="channel_id" translatable="false">Location channel</string>
     <string name="order">Order</string>
     <string name="finish_delivery">Finish delivery</string>
     <string name="are_you_sure">Are you sure?</string>

@@ -109,7 +109,7 @@ class DeliveryActivity : BaseActivity(), NavigationView.OnNavigationItemSelected
                     } else {
                         navigationView.menu.findItem(R.id.action_send_location).isVisible = true
                         updateRecycler()
-                        checkPermissions()
+                        //checkPermissions()
                     }
                     swOnline.isChecked = !swOnline.isChecked
                 }

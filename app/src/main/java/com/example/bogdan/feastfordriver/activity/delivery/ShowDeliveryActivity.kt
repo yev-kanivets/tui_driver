@@ -56,10 +56,12 @@ class ShowDeliveryActivity : BaseBackActivity() {
         alertDialog.setPositiveButton(R.string.yes) { _, _ ->
             Const.DELIVERIES_REF.document(delivery.id).update("realDeliveryTime", Calendar.getInstance().timeInMillis)
                 .addOnSuccessListener { _ ->
-                    Const.ORDERS_REF.document(delivery.orderId).update("status", "delivered").addOnSuccessListener {
-                        setResult(Activity.RESULT_OK)
-                        finish()
-                    }
+                    Const.ORDERS_REF.document(delivery.orderId)
+                        .update("status", "delivered", "realDeliveryTime", Calendar.getInstance().timeInMillis)
+                        .addOnSuccessListener {
+                            setResult(Activity.RESULT_OK)
+                            finish()
+                        }
                 }
         }
         alertDialog.setNegativeButton(R.string.no) { _, _ -> }

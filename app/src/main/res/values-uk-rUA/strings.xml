@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Bögdan</string>
+    <string name="intro_to_app">Готові доставляти найкращу їжу в світі?</string>
+    <string name="sign_in">Увійти</string>
+    <string name="sign_up">Зареєструватися</string>
+    <string name="title_activity_sign_in">Увійти</string>
+    <string name="title_activity_sign_up">Зареєструватися</string>
+    <string name="email">Email</string>
+    <string name="password">Пароль</string>
+    <string name="login_to_your_account">Увійдіть у свій акаунт</string>
+    <string name="create_your_account">Створіть свій обліковий запис</string>
+    <string name="loading">Завантаження …</string>
+    <string name="signed_in">Вхід</string>
+    <string name="intro">Вступ</string>
+    <string name="full_name">Повне ім\'я</string>
+    <string name="phone_number">Номер телефону</string>
+    <string name="terms_of_use">Я згоден з тим, що Bögdan та його представники \nможуть зв\'язатися зі мною
+        через електронну пошту, телефон
+        або SMS (також \n використовуючи автоматичні засоби), використовуючи вказану адресу електронної пошти
+        або
+        номер телефону, зокрема\n
+        для цілей маркетингу. \n
+    </string>
+    <string name="signed_up">Ви зареєстровані</string>
+    <string name="continue_sign_up">Продовжити</string>
+    <string name="get_the_code">Отримати код</string>
+    <string name="enter_confirmation_code">Введіть код підтвердження</string>
+    <string name="verify">Підтвердити</string>
+    <string name="resend_code">Повторно надіслати код</string>
+    <string name="verification_code_entered_was_invalid">Введено неправильний код перевірки</string>
+    <string name="field_can_not_be_empty">Поле не може бути порожнім</string>
+    <string name="select_a_picture_of_the_certificate">Виберіть зображення водійських прав</string>
+    <string name="capacity_of_car">Вантожопідйомність автомобіля(кг)</string>
+    <string name="first_get_the_code">Спочатку отримайте код</string>
+    <string name="online">Онлайн</string>
+    <string name="logout">Вийти</string>
+    <string name="user_signed_up_successfully">Користувач успішно зареєстрован</string>
+    <string name="open">Відкрити</string>
+    <string name="close">Закрити</string>
+    <string name="yes">Так</string>
+    <string name="no">Ні</string>
+    <string name="start_deliver_orders">Почати доставляти замовлення?</string>
+    <string name="finish_deliver_orders">Завершити доставку замовлень?</string>
+    <string name="message_online">Ви можете отримувати замовлення та приймати чи відхиляти їх</string>
+    <string name="message_offline">Ви не можете отримувати замовлення</string>
+    <string name="wait">Зачекайте, поки адміністратор побачить ваші дані …</string>
+    <string name="location_is_monitored">Місцеположення контролюється</string>
+    <string name="order">Замовлення</string>
+    <string name="finish_delivery">Завершити доставку</string>
+    <string name="are_you_sure">Ви впевнені?</string>
+    <string name="confirm">Ви підтверджуєте, що ви доставили замовлення клієнту.</string>
+    <string name="use_coordinate_tracking">Використовувати відстеження місцезнаходження?</string>
+    <string name="confirm_tracking">Якщо ви підтвердите відстеження місцезнаходження, ваші координати будуть автоматично
+        передаватись
+    </string>
+    <string name="send_location">Надіслати поточне місцеположення</string>
+    <string name="restaurant_phone_number">Ресторан: %1$s</string>
+    <string name="client">Клієнт: %1$s</string>
+</resources>
