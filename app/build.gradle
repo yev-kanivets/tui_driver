@@ -18,10 +18,23 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
+    signingConfigs {
+        releaseConfig {
+            storeFile file("sm.jks")
+            storePassword("smartmagnet17")
+            keyAlias "smartmagnet17"
+            keyPassword "smartmagnet17"
+        }
+    }
     buildTypes {
+        debug {
+            debuggable true
+        }
         release {
+            debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.releaseConfig
         }
     }
 }
